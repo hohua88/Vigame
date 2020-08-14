@@ -202,7 +202,7 @@ module_hash = {
     "3a67e2fcbcd446b4" => "pod 'KTMSDK/Extension',sdkVersion\n"
     }
 
-df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n"  "use_frameworks!\n" , "target ‘#{$target_name}’ do\n", "sdkVersion='#{$ktm_version}'\n", "pod 'KTMSDK/KTMSDK',sdkVersion\n"]
+df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n"  "use_frameworks!\n" , "target ‘#{$target_name}’ do\n", "sdkVersion='#{$ktm_version}'\n", "pod 'KTMSDK/KTMSDK',sdkVersion\n", "pod 'KTMSDK/Common',sdkVersion\n"]
 $arr.concat(df_array)
 
  #读取服务器配置

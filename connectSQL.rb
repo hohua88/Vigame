@@ -119,7 +119,7 @@ $path = File.join(file_path, "/Pods/KTMSDK/KTMSDK/KTMSDK.bundle/VigameLibrary.pl
 
 puts $path
 
-#$ktm_version = get_sdk_version
+get_sdk_version
 
  #读取服务器配置
     url = "https://api.vzhifu.net/selectWbguiFormconfig?singleid=#{singleid}"
