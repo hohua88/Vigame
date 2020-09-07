@@ -178,6 +178,7 @@ module_hash = {
     "376fc3eb2c4be30d" => "pod 'KTMSDK/Ads/GDT',sdkVersion\n",
     "b89fe097b01290e1" => "pod 'KTMSDK/Ads/Applovin',sdkVersion\n",
     "4092ca002b6e3b11" => "pod 'KTMSDK/Ads/Vungle',sdkVersion\n",
+    "3e82819188397b3c" => "pod 'KTMSDK/Ads/Kuaishou',sdkVersion\n",
     "bd9a2f3fb25755f2" => "pod 'KTMSDK/Ads/Mintegral',sdkVersion\n",
     "93bc045e56b7a903" => "pod 'KTMSDK/Ads/IronSource',sdkVersion\n",
     "343018db7f91804f" => "pod 'KTMSDK/Ads/IronSource',sdkVersion\npod 'IronSourceAdMobAdapter','4.3.10.1'\npod 'IronSourceFacebookAdapter','4.3.14.0'\npod 'IronSourceUnityAdsAdapter','4.3.0.1'\npod 'IronSourceTikTokAdapter','4.1.2.7'\npod 'IronSourceAppLovinAdapter','4.3.10.1'\npod 'IronSourceMintegralAdapter','4.3.1.0'\n",
