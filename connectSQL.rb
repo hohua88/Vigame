@@ -21,7 +21,7 @@ def get_sdk_version()
     else
         ktm_version = resbody["KTMSDK_Version"]["version"]
         if ktm_version == "1.0.0"
-            ktm_version = "1.0.3"
+            ktm_version = "2.0.0"
         end
     end
 
@@ -52,7 +52,7 @@ end
 #修改Analysis
 def modify_analysis (var1, var2)
     puts "执行 modify_analysis"
-    analysis_parameters = {"umeng_appkey" => "umeng_appkey", "dataeye_appkey" => "dataeye_trackingid", "headline_appkey" => "headline_appkey", "trackingio_appkey" => "trackingIO_appkey", "appsflyer_appkey" => "appsflyer_devkey", "facebook_appkey" => "facebook_appkey", "adjust_key" => "adjust_appToken", "tenjin_appkey" => "tenjin_appkey", "google_appkey" => "google_appkey", "google_new_label" => "google_new_label", "google_retained_label" => "google_retained_label"}
+    analysis_parameters = {"umeng_appkey" => "umeng_appkey", "headline_appkey" => "headline_appkey", "trackingio_appkey" => "trackingIO_appkey", "appsflyer_appkey" => "appsflyer_appkey", "facebook_appkey" => "facebook_appkey", "adjust_key" => "adjust_appkey", "tenjin_appkey" => "tenjin_appkey", "google_appkey" => "google_appkey", "google_new_label" => "google_new_label", "google_retained_label" => "google_retained_label"}
     result = Plist.parse_xml($path)
 
     if var2.nil?
@@ -67,35 +67,11 @@ def modify_analysis (var1, var2)
     puts " #{var1} 修改为  #{var2} "
 end
 
-#修改appid
-def modify_appid (var1, var2)
-    puts "执行 modify_appid"
-    parameter = Hash.new('parameter');
-    parameter = {"appleID" => "apple_appid"}
-
-    result = Plist.parse_xml($path)
-
-    array = var2.split('#')
-
-    array.each do |i|
-        ar = i.split(';')
-        if ar.length == 1
-            puts '没有配置参数'
-        else
-            var = ar[0]
-            result[parameter[var]] = ar[1]
-            Plist::Emit.save_plist(result, $path)
-        end
-        puts "apple_appid修改为：#{ar[1]} "
-    end
-    
-end
-
 #修改common
 def modify_common (var1, var2)
     puts "执行 modify_common"
     commons = Hash.new("common");
-    commons = {"pjId" => "company_prjid", "appkey" => "company_appkey", "com_appid" =>"company_appid", "bugly_appid" => "bugly_appid", "protocol_id" => "protocol_id"}
+    commons = {"pjId" => "company_prjid", "appkey" => "company_appkey", "com_appid" =>"company_appid", "bugly_appid" => "bugly_appid", "protocol_id" => "protocol_id", "apple_appid" => "apple_appid", "company_singleid" => "company_singleid"}
     result = Plist.parse_xml($path)
     key = commons[var1]
     result[key] = var2
@@ -115,7 +91,7 @@ aDir.each do |dir_file|
     end
 end
 
-$path = File.join(file_path, "/Pods/KTMSDK/KTMSDK/KTMSDK.bundle/VigameLibrary.plist")
+$path = File.join(file_path, "/Pods/KTMSDK/Common/KTMCommonKit.bundle/VigameLibrary.plist")
 
 puts $path
 
@@ -132,7 +108,8 @@ get_sdk_version
         puts "服务器请求异常"
     else
          data = resbody["data"]
-         modify_common 'pjId', "333359"
+         modify_common 'pjId', "17265"
+         modify_common "company_singleid", singleid
          modify_appid 'appid', data['parameter']
          modify_common "appkey", data["appkey"]
          modify_common 'com_appid', data['appid']

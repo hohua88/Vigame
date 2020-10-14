@@ -38,7 +38,7 @@ def get_sdk_version()
 end
 
 #设置FacebookAppID
-def modify_analysis_fb(var)
+def modify_analysis_fb(var, var1)
     puts "执行 modify_analysis_fb"
     info_path = File.join(var1, "/Info.plist")
 
@@ -180,8 +180,8 @@ module_hash = {
     "4092ca002b6e3b11" => "pod 'KTMSDK/Ads/Vungle',sdkVersion\n",
     "3e82819188397b3c" => "pod 'KTMSDK/Ads/Kuaishou',sdkVersion\n",
     "bd9a2f3fb25755f2" => "pod 'KTMSDK/Ads/Mintegral',sdkVersion\n",
-    "93bc045e56b7a903" => "pod 'KTMSDK/Ads/IronSource',sdkVersion\n",
-    "343018db7f91804f" => "pod 'KTMSDK/Ads/IronSource',sdkVersion\npod 'IronSourceAdMobAdapter','4.3.10.1'\npod 'IronSourceFacebookAdapter','4.3.14.0'\npod 'IronSourceUnityAdsAdapter','4.3.0.1'\npod 'IronSourceTikTokAdapter','4.1.2.7'\npod 'IronSourceAppLovinAdapter','4.3.10.1'\npod 'IronSourceMintegralAdapter','4.3.1.0'\n",
+    "93bc045e56b7a903" => "pod 'KTMSDK/Ads/Ironsource',sdkVersion\n",
+    "343018db7f91804f" => "pod 'KTMSDK/Ads/Ironsource',sdkVersion\npod 'IronSourceAdMobAdapter','4.3.16.0'\npod 'IronSourceFacebookAdapter','4.3.18.5'\npod 'IronSourceUnityAdsAdapter','4.3.4.2'\npod 'IronSourcePangleAdapter','4.1.7.0'\npod 'IronSourceAppLovinAdapter','4.3.17.0'\n",
     "346d3b77bcce9699" => "pod 'KTMSDK/Ads/KTMAd',sdkVersion\n",
     "8f42b12421198153" => "pod 'KTMSDK/Ads/Unity',sdkVersion\n",
     "61a0b8addc4e2ada" => "pod 'KTMSDK/Analysis/Appsflyer',sdkVersion\n",
@@ -190,17 +190,14 @@ module_hash = {
     "9bc4b30ad093983b" => "pod 'KTMSDK/Analysis/Umeng',sdkVersion\n",
     "6736790a5e4f9829" => "pod 'KTMSDK/Analysis/Facebook',sdkVersion\n",
     "811b3ce36e6d7fd8" => "pod 'KTMSDK/Analysis/Adjust',sdkVersion\n",
-    "affcc433cf07f469" => "pod 'KTMSDK/Analysis/DataEye',sdkVersion\n",
     "65a42a48b5c9de51" => "pod 'KTMSDK/Analysis/Google',sdkVersion\n",
     "7f86e6683a2a3a9d" => "pod 'KTMSDK/Analysis/Tenjin',sdkVersion\n",
-    "2e5316d6958e7ed0" => "pod 'KTMSDK/Bugly',sdkVersion\n",
+    "2e5316d6958e7ed0" => "pod 'KTMSDK/Extension/Bugly',sdkVersion\n",
     
     "edb9f86c8f8aaa6e" => "pod 'KTMSDK/IAP',sdkVersion\n",
-    "3a03da5b9486e430" => "pod 'KTMSDK/Social/facebook',sdkVersion\n",
-    "60bea3764e1efb60" => "pod 'KTMSDK/Social/wechat',sdkVersion\n",
-    "a152da8dd2db3f85" => "pod 'KTMSDK/Social/apple',sdkVersion\n",
-    
-    "3a67e2fcbcd446b4" => "pod 'KTMSDK/Extension',sdkVersion\n"
+    "3a03da5b9486e430" => "pod 'KTMSDK/Social/Facebook',sdkVersion\n",
+    "60bea3764e1efb60" => "pod 'KTMSDK/Social/Wechat',sdkVersion\n",
+    "a152da8dd2db3f85" => "pod 'KTMSDK/Social/Apple',sdkVersion\n"
     }
 
 df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n"  "use_frameworks!\n" , "target ‘#{$target_name}’ do\n", "sdkVersion='#{$ktm_version}'\n", "pod 'KTMSDK/KTMSDK',sdkVersion\n", "pod 'KTMSDK/Common',sdkVersion\n"]
@@ -224,7 +221,7 @@ $arr.concat(df_array)
               array_module = i.split(';')
               if array_module[0] == "TJ"
                   if array_module[1] == "FaceBook"
-                      modify_analysis_fb array_module[3]
+                      modify_analysis_fb array_module[3], file_path
                   end
               elsif  array_module[0]== "Social"
                   if  array_module[2].include?('appid')
