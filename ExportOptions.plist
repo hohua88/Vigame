@@ -9,10 +9,7 @@
 	<key>teamID</key>
 	<string>F8JZ43KSCR</string>
 	<key>provisioningProfiles</key>
-	<dict>
-		<key>com.wb.gc.gzsj2hd</key>
-		<string>guozhihd_hoc</string>
-	</dict>
+	<dict/>
 	<key>signingCertificate</key>
 	<string>Apple Distribution</string>
 	<key>signingStyle</key>
