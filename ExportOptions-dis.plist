@@ -5,7 +5,7 @@
 	<key>destination</key>
 	<string>export</string>
 	<key>method</key>
-	<string>dis</string>
+	<string>app-store</string>
 	<key>teamID</key>
 	<string>F8JZ43KSCR</string>
 	<key>provisioningProfiles</key>
