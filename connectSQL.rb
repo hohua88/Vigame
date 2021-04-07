@@ -5,36 +5,12 @@ require 'net/https'
 require 'uri'
 require 'json'
 require 'base64'
-
-#获取版本号
-def get_sdk_version()
-    puts "执行 KTMSDK_Version"
-    result = Plist.parse_xml($path)
-    #读取服务器配置
-    url = "http://gui.vigame.cn/plugin/files/Versions_iOS.json"
-    uri = URI.parse(url)
-    res = Net::HTTP.get_response(uri)
-
-    resbody = JSON.parse(res.body)
-    if resbody.nil?
-        puts "服务器请求异常"
-    else
-        ktm_version = resbody["KTMSDK_Version"]["version"]
-        if ktm_version == "1.0.0"
-            ktm_version = "2.0.0"
-        end
-    end
-
-    result["KTMSDK_Version"] = ktm_version
-    Plist::Emit.save_plist(result, $path)
-    
-    ktm_version
-end
+require 'xcodeproj'
 
 #修改wechat配置
 def modify_wechat (var1, var2)
     puts "执行 modify_wechat"
-    wechat_parameters = {"wechat_appid" => "AppID", "wechat_appkey" => "AppSecret", "wechat_universalLink" => "UniversalLink"}
+    wechat_parameters = {"wechat_appid" => "wechat_appid", "wechat_appkey" => "wechat_appkey", "wechat_universalLink" => "wechat_universalLink"}
     result = Plist.parse_xml($path)
 
     if var2.length == 0
@@ -59,9 +35,8 @@ def modify_analysis (var1, var2)
         puts '没有配置参数'
     else
         if analysis_parameters[var1]
-               result["statistical parameters"][analysis_parameters[var1]] = var2
-               Plist::Emit.save_plist(result, $path)
-
+             result["statistical parameters"][analysis_parameters[var1]] = var2
+             Plist::Emit.save_plist(result, $path)
         end
     end
     puts " #{var1} 修改为  #{var2} "
@@ -71,7 +46,7 @@ end
 def modify_common (var1, var2)
     puts "执行 modify_common"
     commons = Hash.new("common");
-    commons = {"pjId" => "company_prjid", "appkey" => "company_appkey", "com_appid" =>"company_appid", "bugly_appid" => "bugly_appid", "protocol_id" => "protocol_id", "apple_appid" => "apple_appid", "company_singleid" => "company_singleid"}
+    commons = {"pjId" => "company_prjid", "appkey" => "company_appkey", "com_appid" =>"company_appid", "bugly_appid" => "bugly_appid", "protocol_id" => "protocol_id", "apple_appid" => "apple_appid", "company_singleid" => "company_singleid", "moduleVersion" => "KTMSDK_Version"}
     result = Plist.parse_xml($path)
     key = commons[var1]
     result[key] = var2
@@ -79,7 +54,10 @@ def modify_common (var1, var2)
     puts " #{key} 修改为: #{var2} "
 end
 
+
+
 singleid = ARGV.first
+
 #获取target名字
 $target_name
 $info_path
@@ -91,52 +69,49 @@ aDir.each do |dir_file|
     end
 end
 
+
 $path = File.join(file_path, "/Pods/KTMSDK/Common/KTMCommonKit.bundle/VigameLibrary.plist")
 
 puts $path
 
-get_sdk_version
+#get_sdk_version
 
  #读取服务器配置
-    url = "https://api.vzhifu.net/selectWbguiFormconfig?singleid=#{singleid}"
-    puts "请求地址：#{url}"
-    uri = URI.parse(url)
-    res = Net::HTTP.get_response(uri)
+url = "https://edc.vimedia.cn:6115/selectWbguiFormconfig?singleid=#{singleid}"
+puts "请求地址：#{url}"
+uri = URI.parse(url)
+res = Net::HTTP.get_response(uri)
 
-    resbody = JSON.parse(res.body)
-    if resbody.nil?
-        puts "服务器请求异常"
-    else
-         data = resbody["data"]
-         modify_common 'pjId', "17265"
-         modify_common "company_singleid", singleid
-         modify_appid 'appid', data['parameter']
-         modify_common "appkey", data["appkey"]
-         modify_common 'com_appid', data['appid']
-         
-          moduleData = data['moduleData'].split('#')
-          moduleData.each do |i|
-              array_module = i.split(';')
-              if array_module[0] == "TJ"
-                  if array_module[1] == "FaceBook"
-                     
-                  else
-                      modify_analysis array_module[2],array_module[3]
-                  end
-              elsif  array_module[0]== "Social"
-                  if  array_module[1]== "Wechat"
-                      modify_wechat  array_module[2], array_module[3]
-                  end
-                  if  array_module[2].include?('appid')
-
-                  end
-              elsif  array_module[0] == "Extension" &&  array_module[1] == "Bugly"
-                  modify_common 'bugly_appid',  array_module[3]
-              elsif  array_module[0] == "Extension" &&  array_module[1] == "Activity"
-                  modify_common array_module[2], array_module[3]
-              else
-                  puts "其他"
-              end
+resbody = JSON.parse(res.body)
+if resbody.nil?
+puts "服务器请求异常"
+else
+ data = resbody["data"]
+# modify_xcodeproj file_path, data["packageName"]
+ modify_common "company_singleid", singleid
+ modify_common 'pjId', data["pjId"]
+ modify_common "appkey", data["appkey"]
+ modify_common 'com_appid', "17265"
+ modify_common 'protocol_id',"1"
+ modify_common 'moduleVersion', data["moduleVersion"]
+ moduleData = data['moduleData'].split('#')
+  moduleData.each do |i|
+      array_module = i.split(';')
+      if array_module[0] == "TJ"
+          modify_analysis array_module[2],array_module[3]
+      elsif  array_module[0]== "Social"
+          if  array_module[1]== "Wechat"
+              modify_wechat  array_module[2], array_module[3]
           end
+          if  array_module[2].include?('appid')
+          end
+      elsif  array_module[0] == "Extension" &&  array_module[1] == "Bugly"
+          modify_common 'bugly_appid',  array_module[3]
+      elsif array_module[0] == "Core"
+          modify_common 'apple_appid',  array_module[3]
+      else
+          puts "其他"
+      end
+  end
 
-    end
+end
