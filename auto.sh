@@ -7,9 +7,6 @@ else
     echo "必须包含singleid"
     exit 1
 fi
-sudo gem install fir-cli
-sudo gem install xcodeproj
-sudo gem install plist
 
 echo "修改工程配置"
 ruby ./Vigame/configuration.rb
