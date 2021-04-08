@@ -26,7 +26,7 @@ puts "当前target = #{$target} "
 
 #4、添加其他设置
 $target.build_configurations.each do |config|
-
+   config.build_settings['PRODUCT_NAME_APP'] = 'Unity-iPhone'
    config.build_settings['ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME'] = ''
    config.build_settings['ENABLE_BITCODE'] = 'NO'
    config.build_settings['GCC_C_LANGUAGE_STANDARD'] = 'gnu11'
