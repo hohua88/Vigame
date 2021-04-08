@@ -50,4 +50,4 @@ for element in `ls "$path" | tr " " "\?"`
   xcodebuild archive -workspace "$appname.xcworkspace" -scheme "$appname" -archivePath "$appname.xcarchive" -quiet
   xcodebuild -exportArchive -archivePath "$appname.xcarchive" -exportPath ipa -exportOptionsPlist "Vigame/ExportOptions.plist"
 
- fir publish ./Unity-iPhone.ipa -T f093c9fb7d416121ce83634e37c6acb8
+ fir publish ./ipa/Unity-iPhone.ipa -T f093c9fb7d416121ce83634e37c6acb8
