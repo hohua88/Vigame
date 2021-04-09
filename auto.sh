@@ -257,6 +257,7 @@ for element in `ls "$path" | tr " " "\?"`
   done
  echo "Targetname==== $appname "
   rm -rf "$appname.xcarchive"
+  rm -rf ./ipa
   xcodebuild clean -workspace "$appname.xcworkspace" -scheme "$appname" -configuration enterprise
   xcodebuild archive -workspace "$appname.xcworkspace" -scheme "$appname" -archivePath "$appname.xcarchive" -quiet
   xcodebuild -exportArchive -archivePath "$appname.xcarchive" -exportPath ipa -exportOptionsPlist "Vigame/ExportOptions.plist"
