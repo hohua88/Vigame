@@ -29,7 +29,7 @@ function modify_Exportplist(){
     echo "${TeamIdentifier}"
 }
 echo "修改工程配置"
-if [ -f ./mobileprovision.mobileprovision ];then
+if [ $3 -eq 1 ];then
     modify_Exportplist "./mobileprovision.mobileprovision"
     mpName=$(/usr/libexec/PlistBuddy -c "Print Name" /dev/stdin <<< $(/usr/bin/security cms -D -i ./mobileprovision.mobileprovision ))
     teamId=$(/usr/libexec/PlistBuddy -c "Print TeamIdentifier:0" /dev/stdin <<< $(/usr/bin/security cms -D -i ./mobileprovision.mobileprovision ))
