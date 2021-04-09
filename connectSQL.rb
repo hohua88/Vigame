@@ -6,7 +6,28 @@ require 'uri'
 require 'json'
 require 'base64'
 require 'xcodeproj'
+def modify_xcodeproj(var,var1)
+   
+    #1工程路径
+    #file_path = File.dirname(__FILE__)
+    path = File.join(var, "#{$target_name}.xcodeproj")
 
+    puts "获得当前文件的目录 = #{path} "
+    #2、获取project
+    project = Xcodeproj::Project.open(path)
+    puts "当前project = #{project} "
+
+    #3、获取target
+    target = project.targets.first
+    puts "当前target = #{target} "
+
+    #6、添加其他设置
+    target.build_configurations.each do |config|
+        config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = var1
+    end
+    puts "其他设置成功 "
+    project.save(path)
+end
 #修改wechat配置
 def modify_wechat (var1, var2)
     puts "执行 modify_wechat"
@@ -87,11 +108,18 @@ if resbody.nil?
 puts "服务器请求异常"
 else
  data = resbody["data"]
-# modify_xcodeproj file_path, data["packageName"]
+ 
  modify_common "company_singleid", singleid
  modify_common 'pjId', data["pjId"]
  modify_common "appkey", data["appkey"]
- modify_common 'com_appid', "17265"
+ if ARGV[1] == '1'
+     modify_xcodeproj file_path, data["packageName"]
+     modify_common 'com_appid', data['appid']
+ else
+    modify_xcodeproj file_path, "com.wb.gc.gzsj2hd"
+    modify_common 'com_appid','17265'
+ end
+ 
  modify_common 'protocol_id',"1"
  modify_common 'moduleVersion', data["moduleVersion"]
  moduleData = data['moduleData'].split('#')

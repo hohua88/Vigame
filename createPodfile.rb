@@ -219,13 +219,20 @@ module_hash = {
     else
          data = resbody["data"]
          modify_version data["versionName"]
-
+         version = "1.0.0"
+         if ARGV[1].nil?
+             version = data["versionName"]
+         else
+            version = ARGV[1]
+            puts "版本号 = #{version}"
+            
+         end
          ad_arr = data['ad'].split(';') # ad
 #         "pod 'KTMSDK/KTMSDK',sdkVersion\n","pod 'KTMSDK/Common',sdkVersion\n"
         if $targetname_framework.nil?
-            df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n" , "use_frameworks!\n", "target ‘#{$targetname}’ do\n",  "sdkVersion='#{data["moduleVersion"]}'\n","pod 'KTMSDK/KTMSDK',sdkVersion\n", "pod 'KTMSDK/Common',sdkVersion\n"]
+            df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n" , "use_frameworks!\n", "target ‘#{$targetname}’ do\n",  "sdkVersion='#{version}'\n","pod 'KTMSDK/KTMSDK',sdkVersion\n", "pod 'KTMSDK/Common',sdkVersion\n"]
          else
-            df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n" , "use_frameworks!\n", "target ‘#{$targetname_framework}’ do\n ", "sdkVersion='#{data["moduleVersion"]}'\n","pod 'KTMSDK/KTMSDK',sdkVersion\n", "pod 'KTMSDK/Common',sdkVersion\n", "end\n", "target ‘#{$targetname}’ do\n ","sdkVersion='#{data["moduleVersion"]}'\n"]
+            df_array=["source 'http://wy@dnsdk.vimedia.cn:8080/r/IOSMavenSpec.git'\n" ,   "source 'https://cdn.cocoapods.org/'\n", "platform :ios, 9.0\n" , "use_frameworks!\n", "target ‘#{$targetname_framework}’ do\n ", "sdkVersion='#{version}'\n","pod 'KTMSDK/KTMSDK',sdkVersion\n", "pod 'KTMSDK/Common',sdkVersion\n", "end\n", "target ‘#{$targetname}’ do\n ","sdkVersion='#{version}'\n"]
          end
          $arr.concat(df_array)
           moduleData = data['moduleData'].split('#')

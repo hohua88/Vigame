@@ -35,10 +35,9 @@ $target.build_configurations.each do |config|
    config.build_settings['GCC_ENABLE_CPP_RTTI'] = 'YES'
    config.build_settings['GCC_ENABLE_OBJC_EXCEPTIONS'] = 'YES'
    config.build_settings['CODE_SIGN_STYLE'] = 'Manual'
-   config.build_settings['DEVELOPMENT_TEAM'] = 'VDBUYJQ29S'
-   config.build_settings['PRODUCT_BUNDLE_IDENTIFIER'] = 'com.wb.gc.gzsj2hd'
+   config.build_settings['DEVELOPMENT_TEAM'] = ARGV[1]
    if config.name == "Release"
-       config.build_settings['PROVISIONING_PROFILE_SPECIFIER'] = 'guozhi_hoc'
+       config.build_settings['PROVISIONING_PROFILE_SPECIFIER'] = ARGV[0]
        config.build_settings['CODE_SIGN_IDENTITY'] = 'iPhone Distribution'
        config.build_settings['CODE_SIGN_IDENTITY[sdk=iphoneos*]'] = 'iPhone Distribution'
    else
