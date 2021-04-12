@@ -218,10 +218,10 @@ module_hash = {
         puts "服务器请求异常"
     else
          data = resbody["data"]
-         modify_version data["versionName"]
+         modify_version data["moduleVersion"]
          version = "1.0.0"
          if ARGV[1].nil?
-             version = data["versionName"]
+             version = data["moduleVersion"]
          else
             version = ARGV[1]
             puts "版本号 = #{version}"
